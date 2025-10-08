@@ -1,0 +1,11 @@
+<ul>
+  <li *ngFor="let tag of tage">
+    {{ tag.Ueberschrift }} - {{ tag.Tage }}
+    <div *ngIf="tag.Beschreibung">
+      <div *ngFor="let block of tag.Beschreibung">
+        <p *ngFor="let child of block.children">
+          {{ child.text }}
+        </p>
+      </div>
+    </div>  </li>
+</ul>
