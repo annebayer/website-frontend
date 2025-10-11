@@ -1,11 +1,37 @@
-<ul>
-  <li *ngFor="let tag of tage">
-    {{ tag.Ueberschrift }} - {{ tag.Tage }}
-    <div *ngIf="tag.Beschreibung">
-      <div *ngFor="let block of tag.Beschreibung">
-        <p *ngFor="let child of block.children">
-          {{ child.text }}
-        </p>
+<div class="article-list">
+  <div class="day-card" *ngFor="let day of days">
+    <h2>{{ day.title }}</h2>
+    <p class="dates">
+      {{ day.dateFrom | date }}<span *ngIf="day.dateTo"> - {{ day.dateTo | date }}</span>
+    </p>
+
+    <div *ngIf="day.description" class="description">
+      <ng-container *ngFor="let block of day.description">
+        <p *ngFor="let child of block.children">{{ child.text }}</p>
+      </ng-container>
+    </div>
+
+    <div class="gallery">
+      <img
+        *ngFor="let pic of day.pictures; let i = index"
+        [src]="pic.url"
+        [alt]="pic.description || day.title"
+        (click)="openSlider(day.pictures, i)"
+      />
+    </div>
+  </div>
+
+  <!-- Modal / Lightbox -->
+  <div class="lightbox" *ngIf="activePicture">
+    <div class="overlay" (click)="closeSlider()"></div>
+    <div class="content">
+      <button class="close" (click)="closeSlider()">×</button>
+      <img [src]="activePicture.url" [alt]="activePicture.description || ''" />
+      <p *ngIf="activePicture.description">{{ activePicture.description }}</p>
+      <div class="nav">
+        <button (click)="prevPicture()">‹</button>
+        <button (click)="nextPicture()">›</button>
       </div>
-    </div>  </li>
-</ul>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArticleService } from '../article.service';
-import { Tag } from './../types/Tag'
+import { Day, Picture } from './../types/Day';
 
 @Component({
   selector: 'app-article-list',
@@ -11,14 +11,40 @@ import { Tag } from './../types/Tag'
   styleUrls: ['./article-list.css']
 })
 export class ArticleList implements OnInit {
-  tage: Tag[] = [];
+  days: Day[] = [];
+
+  activePictures: Picture[] = [];
+  activeIndex: number | null = null;
+
+  get activePicture(): Picture | null {
+    return this.activeIndex !== null ? this.activePictures[this.activeIndex] : null;
+  }
 
   constructor(private articleService: ArticleService) {}
 
   ngOnInit(): void {
     this.articleService.getArticles().subscribe((res) => {
-      this.tage = res;
-      console.log('Geladene Artikel:', this.tage);
+      this.days = res;
     });
+  }
+
+  openSlider(pictures: Picture[], index: number): void {
+    this.activePictures = pictures;
+    this.activeIndex = index;
+  }
+
+  closeSlider(): void {
+    this.activeIndex = null;
+  }
+
+  nextPicture(): void {
+    if (this.activeIndex === null) return;
+    this.activeIndex = (this.activeIndex + 1) % this.activePictures.length;
+  }
+
+  prevPicture(): void {
+    if (this.activeIndex === null) return;
+    this.activeIndex =
+      (this.activeIndex - 1 + this.activePictures.length) % this.activePictures.length;
   }
 }
