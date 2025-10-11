@@ -19,19 +19,19 @@
         (click)="openSlider(day.pictures, i)"
       />
     </div>
-  </div>
 
-  <!-- Modal / Lightbox -->
-  <div class="lightbox" *ngIf="activePicture">
-    <div class="overlay" (click)="closeSlider()"></div>
-    <div class="content">
-      <button class="close" (click)="closeSlider()">×</button>
-      <img [src]="activePicture.url" [alt]="activePicture.description || ''" />
-      <p *ngIf="activePicture.description">{{ activePicture.description }}</p>
-      <div class="nav">
-        <button (click)="prevPicture()">‹</button>
-        <button (click)="nextPicture()">›</button>
+    <div class="lightbox" *ngIf="activePicture">
+      <div class="overlay" (click)="closeSlider()"></div>
+      <div class="content">
+        <button class="close" (click)="closeSlider()">×</button>
+        <img [src]="activePicture.url" [alt]="activePicture.description || ''" />
+        <p *ngIf="activePicture.description">{{ activePicture.description }}</p>
+        <div class="nav">
+          <button (click)="prevPicture()">‹</button>
+          <button (click)="nextPicture()">›</button>
+        </div>
       </div>
     </div>
+
   </div>
 </div>

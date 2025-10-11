@@ -1,14 +1,6 @@
 export interface Picture {
-  Beschreibung: string | null;
-  file: {
-    url: string;
-    formats?: {
-      thumbnail?: { url: string };
-      small?: { url: string };
-      medium?: { url: string };
-      large?: { url: string };
-    };
-  };
+  url: string;
+  description: string | null;
 }
 
 export interface Day {
