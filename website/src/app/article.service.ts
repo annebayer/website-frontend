@@ -15,17 +15,25 @@ export class ArticleService {
     return this.http.get<{ data: any[] }>(this.apiUrl).pipe(
       map(response =>
         response.data.map(item => {
-          // Strapi liefert hier keine "attributes", also direkt das Objekt nehmen
           const attr = item.attributes ?? item;
 
           const pictures =
-            attr.pictures?.map((p: any) => {
-              // In deiner aktuellen API ist das File direkt: p.file.url
-              const file = p.file;
-              return {
-                url: file ? this.baseUrl + file.url : '',
-                description: p.Beschreibung || null
-              };
+            attr.pictures?.flatMap((p: any) => {
+              if (p.__component === 'shared.media' && p.file) {
+                return [{
+                  url: this.baseUrl + p.file.url,
+                  description: p.Beschreibung || null
+                }];
+              }
+
+              if (p.__component === 'shared.bilder-mit-text' && Array.isArray(p.Bilder)) {
+                return p.Bilder.map((b: any) => ({
+                  url: this.baseUrl + b.url,
+                  description: null
+                }));
+              }
+
+              return [];
             }) ?? [];
 
           return {
