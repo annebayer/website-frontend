@@ -1,26 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ArticleService } from '../article.service';
-import { Day, Picture } from './../types/Day';
+import { Day } from './../types/Day';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-article-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './article-list.html',
   styleUrls: ['./article-list.css']
 })
 export class ArticleList implements OnInit {
   days: Day[] = [];
 
-  activePictures: Picture[] = [];
-  activeIndex: number | null = null;
-
-  get activePicture(): Picture | null {
-    return this.activeIndex !== null ? this.activePictures[this.activeIndex] : null;
-  }
-
-  constructor(private articleService: ArticleService) {}
+  constructor(
+    private articleService: ArticleService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.articleService.getArticles().subscribe((res) => {
@@ -28,23 +26,43 @@ export class ArticleList implements OnInit {
     });
   }
 
-  openSlider(pictures: Picture[], index: number): void {
-    this.activePictures = pictures;
-    this.activeIndex = index;
+  getTeaserText(day: Day): string {
+    if (day.descriptionShort) {
+      return day.descriptionShort;
+    }
+
+    if (day.description && day.description.length > 0) {
+      const fullText = day.description
+        .map(block => block.children.map((child: any) => child.text).join(' '))
+        .join(' ');
+      return fullText.length > 300
+        ? fullText.slice(0, 300).trim() + ' …'
+        : fullText;
+    }
+
+    return '';
   }
 
-  closeSlider(): void {
-    this.activeIndex = null;
-  }
+toSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // Umlaute entfernen
+    .replace(/[^a-z0-9]+/g, '-')      // Sonderzeichen -> -
+    .replace(/(^-|-$)+/g, '');        // Trim
+}
 
-  nextPicture(): void {
-    if (this.activeIndex === null) return;
-    this.activeIndex = (this.activeIndex + 1) % this.activePictures.length;
-  }
+getShortText(day: Day): string {
+  if (day.descriptionShort) return day.descriptionShort;
+  if (!day.description) return '';
+  const text = day.description
+    .flatMap(b => b.children.map((c:any) => c.text))
+    .join(' ');
+  return text.length > 300 ? text.substring(0, 300) + '…' : text;
+}
 
-  prevPicture(): void {
-    if (this.activeIndex === null) return;
-    this.activeIndex =
-      (this.activeIndex - 1 + this.activePictures.length) % this.activePictures.length;
+
+  openDetail(id: number): void {
+    this.router.navigate(['/article', id]);
   }
 }

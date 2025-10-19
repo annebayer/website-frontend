@@ -1,0 +1,37 @@
+<div class="article-detail" *ngIf="day">
+  <h1>{{ day.title }}</h1>
+
+  <p class="dates">
+    {{ day.dateFrom | date:'mediumDate' }}
+    <span *ngIf="day.dateTo"> - {{ day.dateTo | date:'mediumDate' }}</span>
+  </p>
+
+  <div class="description">
+    <ng-container *ngFor="let block of day.description">
+      <p *ngFor="let child of block.children">{{ child.text }}</p>
+    </ng-container>
+  </div>
+
+  <div class="gallery" *ngIf="day.pictures.length > 0">
+    <img
+      *ngFor="let pic of day.pictures; let i = index"
+      [src]="pic.url"
+      [alt]="pic.description || day.title"
+      (click)="openSlider(day.pictures, i)"
+    />
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" *ngIf="activePicture">
+    <div class="overlay" (click)="closeSlider()"></div>
+    <div class="content">
+      <button class="close" (click)="closeSlider()">×</button>
+      <img [src]="activePicture.url" [alt]="activePicture.description || ''" />
+      <p *ngIf="activePicture.description">{{ activePicture.description }}</p>
+      <div class="nav">
+        <button (click)="prevPicture()">‹</button>
+        <button (click)="nextPicture()">›</button>
+      </div>
+    </div>
+  </div>
+</div>
