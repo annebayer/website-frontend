@@ -1,50 +1,93 @@
-.article-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
+/* days-overview.component.css */
 .day-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .day-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.day-card img.teaser {
+.teaser-image {
+  flex-shrink: 0;
+  width: 200px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.teaser-image img {
   width: 100%;
-  height: 180px;
+  height: 100%;
   object-fit: cover;
 }
 
-.day-card .info {
-  padding: 1rem;
+.teaser-image.placeholder {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.day-card .dates {
-  font-size: 0.9rem;
-  color: #666;
+.no-image {
+  font-size: 3rem;
+  opacity: 0.5;
 }
 
-.day-card .description {
-  margin-top: 0.5rem;
+.day-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.day-content h2 {
+  margin: 0;
+  font-size: 1.5rem;
   color: #333;
-  line-height: 1.4;
 }
 
-.day-card img {
-  width: 100%;
-  max-width: 200px;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto 1rem;
+.dates {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.highlights {
+  margin: 0;
+}
+
+.highlight-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #ffd93d;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.teaser {
+  color: #555;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .day-card {
+    flex-direction: column;
+  }
+
+  .teaser-image {
+    width: 100%;
+    height: 200px;
+  }
 }

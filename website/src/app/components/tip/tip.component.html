@@ -1,0 +1,13 @@
+<div class="tip-container">
+  <div class="tip-icon">
+    <img [src]="getIconUrl()" alt="icon" />
+  </div>
+
+  <div class="tip-text">
+    {{ tip.Text }}
+  </div>
+
+  <div class="tip-image" *ngIf="getImageUrl() as imgUrl">
+    <img [src]="'http://localhost:1337' + imgUrl" alt="Tip image" />
+  </div>
+</div>

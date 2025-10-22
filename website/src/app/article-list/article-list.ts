@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ArticleService } from '../article.service';
+import { DaysService } from '../days.service';
 import { Day } from './../types/Day';
 import { RouterModule } from '@angular/router';
 
@@ -14,16 +14,26 @@ import { RouterModule } from '@angular/router';
 })
 export class ArticleList implements OnInit {
   days: Day[] = [];
+  private strapiUrl = 'http://localhost:1337';
 
   constructor(
-    private articleService: ArticleService,
+    private articleService: DaysService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.articleService.getArticles().subscribe((res) => {
+    this.articleService.getDays().subscribe((res) => {
       this.days = res;
     });
+  }
+
+getImageUrl(url: string): string {
+    // Falls die URL bereits vollständig ist
+    if (url.startsWith('http')) {
+      return url;
+    }
+    // Füge Strapi-URL hinzu
+    return `${this.strapiUrl}${url}`;
   }
 
   getTeaserText(day: Day): string {

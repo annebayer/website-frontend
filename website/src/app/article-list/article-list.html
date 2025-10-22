@@ -1,17 +1,27 @@
-<div class="day-card" *ngFor="let day of days" [routerLink]="['/article', day.id + '-' + toSlug(day.title)]">
-  <h2>{{ day.title }}</h2>
-  <p class="dates">
-    {{ day.dateFrom | date }}<span *ngIf="day.dateTo"> - {{ day.dateTo | date }}</span>
-  </p>
+<div class="day-card" *ngFor="let day of days" [routerLink]="['/article', toSlug(day.title)]">
+  <!-- TeaserBild -->
+  <div class="teaser-image" *ngIf="day.teaserBild">
+    <img
+      [src]="getImageUrl(day.teaserBild.url)"
+      [alt]="day.teaserBild.alternativeText || day.title"
+      loading="lazy"
+    />
+  </div>
 
-  <p class="teaser">
-    {{ getShortText(day) }}
-  </p>
+  <div class="day-content">
+    <h2>{{ day.title }}</h2>
 
-  <img
-    *ngIf="day.pictures.length > 0"
-    [src]="day.pictures[0].url"
-    [alt]="day.title"
-    class="teaser-image"
-  />
+    <p class="dates">
+      {{ day.dateFrom | date:'dd.MM.yyyy' }}
+      <span *ngIf="day.dateTo"> - {{ day.dateTo | date:'dd.MM.yyyy' }}</span>
+    </p>
+
+    <p class="highlights" *ngIf="day.Highlights">
+      <span class="highlight-badge">⭐ {{ day.Highlights }}</span>
+    </p>
+
+    <p class="teaser" *ngIf="day.descriptionShort">
+      {{ day.descriptionShort }}
+    </p>
+  </div>
 </div>
