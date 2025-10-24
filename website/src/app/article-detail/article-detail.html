@@ -39,8 +39,9 @@
   <div class="content-blocks" *ngIf="day.pictures?.length">
     <ng-container *ngFor="let block of day.pictures; let i = index">
 
-      <!-- TIP Component -->
-      <div class="block tip-block" *ngIf="isTip(block)">
+      <!-- Tip Block -->
+      <div *ngIf="isTip(block)" class="tip-block">
+        <p>Tip</p>
         <app-tip [tip]="block"></app-tip>
       </div>
 

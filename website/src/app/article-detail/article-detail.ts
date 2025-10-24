@@ -90,16 +90,8 @@ export class ArticleDetail implements OnInit {
   }
 
   // --- Type Guards ---
-  isTip(block: any): block is TipComponent {
-    return block.__typename === 'ComponentSharedTip';
-  }
-
-  isBilderMitText(block: any): block is BilderMitTextComponent {
-    return block.__typename === 'ComponentSharedBilderMitText';
-  }
-
-  isAusfluege(block: any): block is AusfluegeComponent {
-    return block.__typename === 'ComponentSharedAusfluege';
+  isTip(block: PictureComponent): block is TipComponent {
+    return block.type === 'tip';
   }
 
   isMediaFile(block: any): block is MediaFile {

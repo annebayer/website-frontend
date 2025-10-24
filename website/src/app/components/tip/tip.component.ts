@@ -13,17 +13,17 @@ export class Tip {
   @Input() tip!: TipComponent;
 
   getIconUrl(): string {
-    switch (this.tip.Icon) {
-      case 'Ausrufezeichen': return '/assets/icons/exclamation.png';
-      case 'Fragezeichen': return '/assets/icons/question.png';
-      case 'Smiley': return '/assets/icons/smiley.png';
-      default: return '/assets/icons/info.png';
+    switch (this.tip.icon) {
+      case 'Ausrufezeichen': return '/icons/exclamation.png';
+      case 'Fragezeichen': return '/icons/question.png';
+      case 'Smiley': return '/icons/smiley.png';
+      default: return '/icons/smileyBad.png';
     }
   }
 
   getImageUrl(): string | null {
-    if (!this.tip.Bild) return null;
-    return this.tip.Bild.formats?.small?.url ?? this.tip.Bild.url ?? null;
+    if (!this.tip.bild) return null;
+    return this.tip.bild.formats?.small?.url ?? this.tip.bild.url ?? null;
   }
 
 }

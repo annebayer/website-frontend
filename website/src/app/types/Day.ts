@@ -19,15 +19,17 @@ export interface RichTextBlock {
 
 export interface BilderMitTextComponent {
   __component: 'shared.bilder-mit-text';
+  type: string;
   Beschreibung: string | null;
   Bilder: MediaFile[];
 }
 
 export interface TipComponent {
   __component: 'shared.tip';
-  Text: string;
-  Icon?: 'Ausrufezeichen' | 'Fragezeichen' | 'Smiley' | null;
-  Bild?: MediaFile | null;
+  type: string;
+  text: string;
+  icon?: 'Ausrufezeichen' | 'Fragezeichen' | 'Smiley' | null;
+  bild?: MediaFile | null;
 }
 
 export interface AusfluegeBild {
@@ -36,6 +38,7 @@ export interface AusfluegeBild {
 }
 export interface AusfluegeComponent {
   __component: 'shared.ausfluege';
+  type: string;
   id: string;
   title: string;
   description: string;
