@@ -7,14 +7,16 @@ import {
   TipComponent,
   BilderMitTextComponent,
   AusfluegeComponent,
-  MediaFile
+  MediaFile,
+  PictureComponent
 } from './../types/Day';
 import { Tip } from '../components/tip/tip.component';
+import { Ausflug } from '../components/ausflug/ausflug.component';
 
 @Component({
   selector: 'app-article-detail',
   standalone: true,
-  imports: [CommonModule, Tip],
+  imports: [CommonModule, Tip, Ausflug],
   templateUrl: './article-detail.html',
   styleUrls: ['./article-detail.css']
 })
@@ -23,9 +25,10 @@ export class ArticleDetail implements OnInit {
   private strapiUrl = 'http://localhost:1337';
 
   // Lightbox Properties
-  sliderImages: any[] = [];
-  currentImageIndex: number = 0;
-  activePicture: any = null;  // Nur eine Definition!
+  lightboxOpen = false;
+  lightboxImages: MediaFile[] = [];
+  lightboxIndex = 0;
+  lightboxDescription = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -60,32 +63,47 @@ export class ArticleDetail implements OnInit {
     return url.startsWith('http') ? url : `${this.strapiUrl}${url}`;
   }
 
-  // --- Lightbox ---
-  openSlider(images: any[], startIndex: number): void {
-    this.sliderImages = images;
-    this.currentImageIndex = startIndex;
-    this.activePicture = images[startIndex];
+  // --- Format Date ---
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('de-DE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  }
+
+  // --- Get Description Text ---
+  getDescriptionText(): string {
+    if (!this.day?.description) return '';
+    return this.day.description
+      .map(block => block.children.map(child => child.text).join(''))
+      .join('\n\n');
+  }
+
+  // --- Lightbox Methods ---
+  openLightbox(images: MediaFile[], index: number, description: string = ''): void {
+    this.lightboxImages = images;
+    this.lightboxIndex = index;
+    this.lightboxDescription = description;
+    this.lightboxOpen = true;
     document.body.style.overflow = 'hidden';
   }
 
-  closeSlider(): void {
-    this.activePicture = null;
-    this.sliderImages = [];
-    this.currentImageIndex = 0;
+  closeLightbox(): void {
+    this.lightboxOpen = false;
     document.body.style.overflow = '';
   }
 
-  nextPicture(): void {
-    if (this.currentImageIndex < this.sliderImages.length - 1) {
-      this.currentImageIndex++;
-      this.activePicture = this.sliderImages[this.currentImageIndex];
+  nextImage(): void {
+    if (this.lightboxIndex < this.lightboxImages.length - 1) {
+      this.lightboxIndex++;
     }
   }
 
-  prevPicture(): void {
-    if (this.currentImageIndex > 0) {
-      this.currentImageIndex--;
-      this.activePicture = this.sliderImages[this.currentImageIndex];
+  previousImage(): void {
+    if (this.lightboxIndex > 0) {
+      this.lightboxIndex--;
     }
   }
 
@@ -94,19 +112,7 @@ export class ArticleDetail implements OnInit {
     return block.type === 'tip';
   }
 
-  isMediaFile(block: any): block is MediaFile {
-    return 'url' in block && !('__typename' in block);
-  }
-
-  // --- Helper: alle Bilder eines Blocks für die Lightbox ---
-  getBlockPictures(block: any): MediaFile[] {
-    if (this.isBilderMitText(block)) return block.Bilder ?? [];
-    if (this.isTip(block) && block.Bild) return [block.Bild];
-    if (this.isAusfluege(block)) {
-      return (block.Bilder ?? [])
-        .flatMap((item: any) => item.bilderMedia ?? []);
-    }
-    if (this.isMediaFile(block)) return [block];
-    return [];
+  isAusfluege(block: PictureComponent): block is AusfluegeComponent {
+    return block.type === 'ausfluege';
   }
 }

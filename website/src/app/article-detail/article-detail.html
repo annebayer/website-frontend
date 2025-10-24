@@ -1,43 +1,30 @@
-<div class="article-detail" *ngIf="day">
+<article class="article-detail" *ngIf="day">
   <!-- Header -->
   <header class="article-header">
     <h1>{{ day.title }}</h1>
 
     <div class="meta-info">
-      <span class="dates">
-        📅 {{ day.dateFrom | date:'dd.MM.yyyy' }}
-        <span *ngIf="day.dateTo"> - {{ day.dateTo | date:'dd.MM.yyyy' }}</span>
-      </span>
-
+      <div class="dates">
+        <span>📅 {{ formatDate(day.dateFrom) }}</span>
+        <span *ngIf="day.dateTo"> - {{ formatDate(day.dateTo) }}</span>
+      </div>
       <span class="highlights" *ngIf="day.Highlights">
         ⭐ {{ day.Highlights }}
       </span>
     </div>
-
-    <!-- Teaser Bild -->
-    <div class="hero-image" *ngIf="day.teaserBild">
-      <img
-        [src]="getImageUrl(day.teaserBild.url)"
-        [alt]="day.teaserBild.alternativeText || day.title"
-      />
-    </div>
   </header>
 
-  <!-- Short Description -->
-  <div class="intro" *ngIf="day.descriptionShort">
-    <p class="lead">{{ day.descriptionShort }}</p>
-  </div>
+  <!-- Description -->
+  <section class="description" *ngIf="day.description?.length">
+    <p>{{ getDescriptionText() }}</p>
+  </section>
 
-  <!-- Main Description -->
-  <div class="description" *ngIf="day.description">
-    <ng-container *ngFor="let block of day.description">
-      <p *ngFor="let child of block.children">{{ child.text }}</p>
-    </ng-container>
-  </div>
+  <!-- Picture Blocks -->
+  <section class="content-blocks">
+    <div *ngFor="let block of day.pictures; let i = index">
+      <p>{{block?.type }}  bei index {{i}}</p>
+      <!-- Bilder mit Text Block -->
 
-  <!-- Content Blocks -->
-  <div class="content-blocks" *ngIf="day.pictures?.length">
-    <ng-container *ngFor="let block of day.pictures; let i = index">
 
       <!-- Tip Block -->
       <div *ngIf="isTip(block)" class="tip-block">
@@ -45,107 +32,58 @@
         <app-tip [tip]="block"></app-tip>
       </div>
 
-      <!-- BILDER MIT TEXT -->
-      <div class="block bilder-mit-text-block" *ngIf="isBilderMitText(block)">
-        <p class="block-description" *ngIf="block.Beschreibung">
-          {{ block.Beschreibung }}
-        </p>
-
-        <div class="image-grid" [class.single]="block.Bilder.length === 1">
-          <div
-            *ngFor="let img of block.Bilder; let j = index"
-            class="image-wrapper"
-            (click)="openSlider(block.Bilder, j)"
-          >
-            <img
-              [src]="getImageUrl(img.url)"
-              [alt]="img.alternativeText || day.title"
-              loading="lazy"
-            />
-            <div class="image-overlay">
-              <span class="zoom-icon">🔍</span>
-            </div>
-          </div>
-        </div>
+      <!-- Ausfluege Block -->
+      <div *ngIf="isAusfluege(block)" class="ausfluege-block">
+        <p>Ausflug</p>
+        <app-ausflug [ausflug]="block"></app-ausflug>
       </div>
 
-      <!-- AUSFLÜGE -->
-      <div class="block ausfluege-block" *ngIf="block.__component === 'shared.ausfluege'">
-        <div class="block-header">
-          <h2>{{ block.title }}</h2>
-          <p class="subtitle" *ngIf="block.description">{{ block.description }}</p>
-        </div>
+    </div>
+  </section>
+</article>
 
-        <div *ngFor="let item of block.Bilder" class="ausflug-item">
-          <p class="item-description" *ngIf="item.Beschreibung">
-            {{ item.Beschreibung }}
-          </p>
+<!-- Lightbox -->
+<div class="lightbox" *ngIf="lightboxOpen" (click)="closeLightbox()">
+  <div class="lightbox-overlay"></div>
 
-          <div class="image-grid" [class.single]="item.Bilder.length === 1">
-            <div
-              *ngFor="let img of item.Bilder; let k = index"
-              class="image-wrapper"
-              (click)="openSlider(item.Bilder, k)"
-            >
-              <img
-                [src]="getImageUrl(img.url)"
-                [alt]="img.alternativeText || item.Beschreibung || block.title"
-                loading="lazy"
-              />
-              <div class="image-overlay">
-                <span class="zoom-icon">🔍</span>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="lightbox-content" (click)="$event.stopPropagation()">
+    <button class="lightbox-close" (click)="closeLightbox()">×</button>
 
-        <div class="tip-wrapper" *ngIf="block.tip">
-          <app-tip [tip]="block.tip"></app-tip>
-        </div>
-      </div>
+    <img
+      class="lightbox-image"
+      [src]="getImageUrl(lightboxImages[lightboxIndex].url)"
+      [alt]="lightboxImages[lightboxIndex].alternativeText || 'Bild'"
+    />
 
-    </ng-container>
-  </div>
+    <p class="lightbox-description" *ngIf="lightboxDescription">
+      {{ lightboxDescription }}
+    </p>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" *ngIf="activePicture" [@fadeIn]>
-    <div class="lightbox-overlay" (click)="closeSlider()"></div>
-    <div class="lightbox-content">
-      <button class="lightbox-close" (click)="closeSlider()" aria-label="Close">
-        ×
+    <div class="lightbox-nav" *ngIf="lightboxImages.length > 1">
+      <button
+        class="nav-btn"
+        (click)="previousImage()"
+        [disabled]="lightboxIndex === 0"
+      >
+        ‹
       </button>
 
-      <img
-        [src]="getImageUrl(activePicture.url)"
-        [alt]="activePicture.alternativeText || ''"
-        class="lightbox-image"
-      />
+      <span class="image-counter">
+        {{ lightboxIndex + 1 }} / {{ lightboxImages.length }}
+      </span>
 
-      <p class="lightbox-description" *ngIf="activePicture.alternativeText">
-        {{ activePicture.alternativeText }}
-      </p>
-
-      <div class="lightbox-nav" *ngIf="sliderImages.length > 1">
-        <button
-          class="nav-btn prev"
-          (click)="prevPicture()"
-          aria-label="Previous"
-          [disabled]="currentImageIndex === 0"
-        >
-          ‹
-        </button>
-        <span class="image-counter">
-          {{ currentImageIndex + 1 }} / {{ sliderImages.length }}
-        </span>
-        <button
-          class="nav-btn next"
-          (click)="nextPicture()"
-          aria-label="Next"
-          [disabled]="currentImageIndex === sliderImages.length - 1"
-        >
-          ›
-        </button>
-      </div>
+      <button
+        class="nav-btn"
+        (click)="nextImage()"
+        [disabled]="lightboxIndex === lightboxImages.length - 1"
+      >
+        ›
+      </button>
     </div>
   </div>
+</div>
+
+<!-- Loading/Error States -->
+<div *ngIf="!day" class="loading">
+  <p>Laden...</p>
 </div>

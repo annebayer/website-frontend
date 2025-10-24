@@ -1,0 +1,48 @@
+<div class="ausflug-container">
+  <!-- Header -->
+
+  <p>Ausflug</p>
+  <div class="ausflug-header">
+    <h2 class="ausflug-title">{{ ausflug.title }}</h2>
+    <p class="ausflug-description" *ngIf="ausflug.description">
+      {{ ausflug.description }}
+    </p>
+  </div>
+
+  <!-- Bilder Gruppen -->
+  <div class="ausflug-content">
+    <div *ngFor="let bilderGruppe of ausflug.bilder" class="bilder-gruppe">
+
+      <!-- Beschreibung der Gruppe -->
+      <p *ngIf="bilderGruppe.description" class="gruppe-beschreibung">
+        {{ bilderGruppe.description }}
+      </p>
+
+      <!-- Bilder Grid -->
+      <div
+        class="image-grid"
+        [class.single]="bilderGruppe.bilder.length === 1"
+        [class.double]="bilderGruppe.bilder.length === 2"
+      >
+        <div
+          *ngFor="let image of bilderGruppe.bilder; let imgIndex = index"
+          class="image-wrapper"
+          (click)="onImageClick(bilderGruppe.bilder, imgIndex, bilderGruppe.description || '')"
+        >
+          <img
+            [src]="getImageUrl(image.url)"
+            [alt]="image.alternativeText || 'Ausflugsbild'"
+          />
+          <div class="image-overlay">
+            <span class="zoom-icon">🔍</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tip am Ende -->
+  <div *ngIf="ausflug.tip" class="ausflug-tip">
+    <app-tip [tip]="ausflug.tip"></app-tip>
+  </div>
+</div>

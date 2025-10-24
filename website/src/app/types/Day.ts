@@ -32,22 +32,22 @@ export interface TipComponent {
   bild?: MediaFile | null;
 }
 
-export interface AusfluegeBild {
-  Beschreibung: string | null;
-  Bilder: MediaFile[];
+export interface AusflugBild {
+  description: string | null;
+  bilder: MediaFile[];
 }
+//todo in AusflugComponent umändern + Groß/Kleinschreibung
 export interface AusfluegeComponent {
   __component: 'shared.ausfluege';
   type: string;
   id: string;
   title: string;
   description: string;
-  Bilder: AusfluegeBild[];
+  bilder: AusflugBild[];
   tip: TipComponent | null;
 }
 
 export type PictureComponent =
-  | BilderMitTextComponent
   | TipComponent
   | AusfluegeComponent;
 

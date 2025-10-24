@@ -1,0 +1,175 @@
+.ausflug-container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #f1f3f5 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid #ffd93d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+.ausflug-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(255, 217, 61, 0.3);
+}
+
+.ausflug-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem 0;
+}
+
+.ausflug-description {
+  font-size: 1.05rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Content */
+.ausflug-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Bilder Gruppe */
+.bilder-gruppe {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bilder-gruppe:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.gruppe-beschreibung {
+  font-size: 1rem;
+  color: #555;
+  margin: 0 0 1rem 0;
+  padding: 0.5rem 0.75rem;
+  background: #f8f9fa;
+  border-left: 3px solid #ffd93d;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Image Grid */
+.image-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.image-grid.single {
+  grid-template-columns: 1fr;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.image-grid.double {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+  background: #e9ecef;
+  transition: transform 0.3s ease;
+}
+
+.image-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.image-wrapper:hover img {
+  transform: scale(1.1);
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-wrapper:hover .image-overlay {
+  opacity: 1;
+}
+
+.zoom-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Tip */
+.ausflug-tip {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(255, 217, 61, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ausflug-container {
+    padding: 1rem;
+  }
+
+  .ausflug-title {
+    font-size: 1.5rem;
+  }
+
+  .ausflug-description {
+    font-size: 1rem;
+  }
+
+  .image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-grid.double {
+    grid-template-columns: 1fr;
+  }
+
+  .bilder-gruppe {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ausflug-container {
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+
+  .ausflug-header {
+    margin-bottom: 1rem;
+  }
+
+  .ausflug-title {
+    font-size: 1.3rem;
+  }
+
+  .gruppe-beschreibung {
+    font-size: 0.95rem;
+  }
+}

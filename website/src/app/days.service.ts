@@ -51,14 +51,6 @@ export class DaysService {
                 }
               }
             }
-            ... on ComponentSharedBilderMitText {
-              Beschreibung
-              Bilder {
-                documentId
-                url
-                alternativeText
-              }
-            }
             ... on ComponentSharedTip {
               Icon
               Text
@@ -108,7 +100,7 @@ export class DaysService {
                 title: picture.title,
                 description: picture.description,
                 bilder: picture.bilderKomponenten?.map((bild: any) => ({
-                  beschreibung: bild.Beschreibung,
+                  description: bild.Beschreibung,
                   bilder: bild.bilderMedia?.map((media: any) => ({
                     id: media.documentId,
                     url: media.url,
@@ -124,17 +116,6 @@ export class DaysService {
                     alternativeText: picture.tip.Bild.alternativeText
                   } : null
                 } : null
-              };
-
-            case 'ComponentSharedBilderMitText':
-              return {
-                type: 'bilderMitText',
-                beschreibung: picture.Beschreibung,
-                bilder: picture.Bilder?.map((media: any) => ({
-                  id: media.documentId,
-                  url: media.url,
-                  alternativeText: media.alternativeText
-                }))
               };
 
             case 'ComponentSharedTip':
