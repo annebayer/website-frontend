@@ -19,6 +19,7 @@ export interface RouteComponent {
   from?: string;
   to?: string;
   coordinates: Coordinates[];
+  lineStyle: string
 }
 
 export type MapComponent = LocationComponent | RouteComponent;

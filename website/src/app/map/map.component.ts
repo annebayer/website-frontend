@@ -97,11 +97,29 @@ private addMarkersAndRoutes(): void {
         [coord.x, coord.y] as L.LatLngExpression
       );
 
+      const style = this.getLineStyle(route.lineStyle);
+
+      console.log("Style", route.lineStyle)
       L.polyline(latlngs, {
         color: 'blue',
         weight: 3,
-        opacity: 0.7
+        opacity: 0.7,
+        ...style
       }).addTo(this.map);
+    }
+
+    private getLineStyle(lineStyle?: string): L.PolylineOptions {
+      switch(lineStyle) {
+        case 'Gestrichelt':
+          return { dashArray: '10, 10' };
+
+        case 'Gepunktet':
+          return { dashArray: '2, 8' };
+
+        case 'solid':
+        default:
+          return { dashArray: undefined };  // Durchgezogen
+      }
     }
 
     private getCustomIcon(signArt: string): L.Icon {
@@ -121,7 +139,7 @@ private addMarkersAndRoutes(): void {
             iconUrl = 'marker/parking.png';
             break;
           case 'Sehenswürdigkeit':
-            iconUrl = 'marker/food.png';
+            iconUrl = 'marker/default.png';
             break;
           default:
             iconUrl = 'marker/default.png';
@@ -142,7 +160,7 @@ private addMarkersAndRoutes(): void {
       return (component as RouteComponent).type === 'route';
     }
 
-  toSlug(title: string): string { // todo auslagern
+  toSlug(title: string): string {
     return toSlug(title)
   }
 }

@@ -41,6 +41,9 @@ export class MapService {
                 x
                 y
               }
+              MapRouteArt {
+                Art
+              }
             }
           }
         }
@@ -81,6 +84,8 @@ export class MapService {
           } as LocationComponent;
 
         case 'ComponentSharedMapRoute':
+          console.log("Linie")
+          console.log(ort.LinienArt)
           return {
             type: 'route',
             from: ort.Von,
@@ -88,7 +93,8 @@ export class MapService {
             coordinates: (ort.Koordinaten || []).map((k: any) => ({
               x: k.x,
               y: k.y
-            }))
+            })),
+            lineStyle: ort.MapRouteArt != null ? ort.MapRouteArt.Art : null,
           } as RouteComponent;
 
         default:
