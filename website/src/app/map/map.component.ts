@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { MapService } from '../map.service';
 import { Map, MapComponent, LocationComponent, RouteComponent } from '../types/Map';
 import { Router } from '@angular/router';
+import { toSlug } from '../util/slug'
 
 
 @Component({
@@ -142,11 +143,6 @@ private addMarkersAndRoutes(): void {
     }
 
   toSlug(title: string): string { // todo auslagern
-    return title
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)+/g, '');
+    return toSlug(title)
   }
 }

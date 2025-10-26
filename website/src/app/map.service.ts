@@ -12,7 +12,7 @@ export class MapService {
 
   constructor(private http: HttpClient) {}
 
-  getMap(): Observable<Map> {  // ← Kein Array, da singleType
+  getMap(): Observable<Map> {
     const query = `
       query GetKarte {
         karte {
@@ -70,9 +70,9 @@ export class MapService {
             type: 'location',
             id: ort.id,
             hoverTitle: ort.hoverTitle,
-            sign: ort.Sign?.Art || '',  // ← .Art hinzugefügt
+            sign: ort.Sign?.Art || '',
             coordinates: {
-              x: ort.Koordinate?.x || 0,  // ← Korrekte Syntax
+              x: ort.Koordinate?.x || 0,
               y: ort.Koordinate?.y || 0
             },
             relation: ort.tages?.[0] ? {
@@ -85,7 +85,7 @@ export class MapService {
             type: 'route',
             from: ort.Von,
             to: ort.Nach,
-            coordinates: (ort.Koordinaten || []).map((k: any) => ({  // ← Koordinaten (Plural!)
+            coordinates: (ort.Koordinaten || []).map((k: any) => ({
               x: k.x,
               y: k.y
             }))
@@ -95,6 +95,6 @@ export class MapService {
           console.warn('Unknown component type:', ort.__typename);
           return null;
       }
-    }).filter(Boolean) as MapComponent[];  // ← Filtere null-Werte
+    }).filter(Boolean) as MapComponent[];
   }
 }

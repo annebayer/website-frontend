@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DaysService } from '../days.service';
 import { Day } from './../types/Day';
 import { RouterModule } from '@angular/router';
+import { toSlug } from '../util/slug'
 
 @Component({
   selector: 'app-article-list',
@@ -53,13 +54,8 @@ getImageUrl(url: string): string {
     return '';
   }
 
-toSlug(title: string): string { // todo in Utils auslagern - wird zweimal verwendetr
-  return title
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Umlaute entfernen
-    .replace(/[^a-z0-9]+/g, '-')      // Sonderzeichen -> -
-    .replace(/(^-|-$)+/g, '');        // Trim
+toSlug(title: string): string {
+  return toSlug(title)
 }
 
 getShortText(day: Day): string {
