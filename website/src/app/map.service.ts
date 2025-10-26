@@ -84,8 +84,6 @@ export class MapService {
           } as LocationComponent;
 
         case 'ComponentSharedMapRoute':
-          console.log("Linie")
-          console.log(ort.LinienArt)
           return {
             type: 'route',
             from: ort.Von,

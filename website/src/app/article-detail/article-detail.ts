@@ -51,7 +51,6 @@ export class ArticleDetail implements OnInit {
 
       if (!this.day) {
         console.warn(`Kein Tag mit Titel "${param}" gefunden`);
-        console.log('Verfügbare Titel:', days.map(d => d.title));
       }
       console.log("Tag", this.day);
     });

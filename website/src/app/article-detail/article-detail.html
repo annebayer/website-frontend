@@ -22,19 +22,16 @@
   <!-- Picture Blocks -->
   <section class="content-blocks">
     <div *ngFor="let block of day.pictures; let i = index">
-      <p>{{block?.type }}  bei index {{i}}</p>
       <!-- Bilder mit Text Block -->
 
 
       <!-- Tip Block -->
       <div *ngIf="isTip(block)" class="tip-block">
-        <p>Tip</p>
         <app-tip [tip]="block"></app-tip>
       </div>
 
       <!-- Ausfluege Block -->
       <div *ngIf="isAusfluege(block)" class="ausfluege-block">
-        <p>Ausflug</p>
         <app-ausflug [ausflug]="block"></app-ausflug>
       </div>
 

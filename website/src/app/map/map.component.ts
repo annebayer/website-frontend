@@ -99,7 +99,6 @@ private addMarkersAndRoutes(): void {
 
       const style = this.getLineStyle(route.lineStyle);
 
-      console.log("Style", route.lineStyle)
       L.polyline(latlngs, {
         color: 'blue',
         weight: 3,
