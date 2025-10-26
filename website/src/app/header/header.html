@@ -1,0 +1,34 @@
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <a routerLink="/">
+        <span class="logo-icon">🌍</span>
+        <span class="logo-text">Unsere Neuseeland-Reise</span>
+      </a>
+    </div>
+
+    <nav class="nav" [class.active]="isMenuOpen">
+      <a routerLink="/"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}"
+         (click)="toggleMenu()">
+        <span class="nav-icon">🏠</span>
+        Startseite
+      </a>
+      <a routerLink="/map"
+         routerLinkActive="active"
+         (click)="toggleMenu()">
+        <span class="nav-icon">🗺️</span>
+        Karte
+      </a>
+    </nav>
+
+    <button class="menu-toggle"
+            (click)="toggleMenu()"
+            [class.active]="isMenuOpen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
