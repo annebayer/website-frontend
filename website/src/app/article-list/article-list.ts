@@ -53,7 +53,7 @@ getImageUrl(url: string): string {
     return '';
   }
 
-toSlug(title: string): string {
+toSlug(title: string): string { // todo in Utils auslagern - wird zweimal verwendetr
   return title
     .toLowerCase()
     .normalize('NFD')

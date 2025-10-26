@@ -2,6 +2,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { MapService } from '../map.service';
 import { Map, MapComponent, LocationComponent, RouteComponent } from '../types/Map';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,8 +14,10 @@ import { Map, MapComponent, LocationComponent, RouteComponent } from '../types/M
 export class TravelMapComponent implements OnInit, AfterViewInit {
   private map!: L.Map;
   maps: Map | null = null
-  constructor(private mapService: MapService) {}
-
+  constructor(
+      private mapService: MapService,
+      private router: Router
+    ) {}
 private addMarkersAndRoutes(): void {
       if (!this.maps || !this.map) return;
 
@@ -63,8 +66,30 @@ private addMarkersAndRoutes(): void {
         icon: this.getCustomIcon(location.sign)
       }).addTo(this.map);
 
-      marker.bindPopup(`<b>${location.hoverTitle}</b>`);
-    }
+      marker.bindTooltip(location.hoverTitle, {
+          permanent: false,
+          direction: 'top',
+          offset: [0, -30],
+          opacity: 0.9,
+          className: 'custom-tooltip'  //todo Eigene CSS-Klasse
+        });
+
+       if (location.relation) {
+            marker.on('click', () => {
+              this.router.navigate(['/article', this.toSlug(location.relation!.title)]);
+            });
+
+            marker.on('popupopen', () => {
+              const linkElement = document.getElementById(`link-${location.id}`);
+              if (linkElement) {
+                linkElement.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  this.router.navigate(['/tage', location.relation!.title]);
+                });
+              }
+            });
+          }
+      }
 
     private addRoute(route: RouteComponent): void {
       const latlngs: L.LatLngExpression[] = route.coordinates.map(coord =>
@@ -115,4 +140,13 @@ private addMarkersAndRoutes(): void {
     private isRouteComponent(component: MapComponent): component is RouteComponent {
       return (component as RouteComponent).type === 'route';
     }
+
+  toSlug(title: string): string { // todo auslagern
+    return title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
   }
+}

@@ -30,6 +30,9 @@ export class MapService {
               Sign {
                 Art
               }
+              tages {
+                title
+              }
             }
             ... on ComponentSharedMapRoute {
               Von
@@ -71,7 +74,10 @@ export class MapService {
             coordinates: {
               x: ort.Koordinate?.x || 0,  // ← Korrekte Syntax
               y: ort.Koordinate?.y || 0
-            }
+            },
+            relation: ort.tages?.[0] ? {
+              title: ort.tages[0].title
+            } : undefined
           } as LocationComponent;
 
         case 'ComponentSharedMapRoute':

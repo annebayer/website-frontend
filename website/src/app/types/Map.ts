@@ -7,7 +7,9 @@ export interface LocationComponent {
   type: 'location';
   id: string;
   hoverTitle: string;
-  relation?: string;
+  relation?: {
+    title: string
+  };
   sign: string;
   coordinates: Coordinates;
 }
