@@ -25,6 +25,7 @@
           "options": {
             "browser": "src/main.ts",
             "outputPath": "dist/website",
+            "baseHref": "/website-frontend",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
