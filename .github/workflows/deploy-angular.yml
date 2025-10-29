@@ -2,8 +2,8 @@ name: Deploy Angular to GitHub Pages
 
 on:
   push:
-    branches: ["main"]     # Bei jedem Push auf main deployen
-  workflow_dispatch:        # ermöglicht manuelles Ausführen
+    branches: ["main"]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -32,14 +32,14 @@ jobs:
         run: npm install
 
       - name: Build Angular app
-        run: |
-          npm run build -- --configuration production
+        working-directory: ./website
+        run: npm run build -- --configuration production
 
       - name: Upload build output
         uses: actions/upload-pages-artifact@v3
         with:
-          # WICHTIG: Angular erzeugt nur in diesem Ordner die Builds
-          path: dist/**/browser
+          # Wichtig: Angular 17 erzeugt Builds hier drin
+          path: ./website/dist/**/browser
 
   deploy:
     needs: build
