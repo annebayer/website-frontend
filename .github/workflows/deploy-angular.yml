@@ -35,6 +35,13 @@ jobs:
         working-directory: ./website
         run: npm run build -- --configuration production
 
+      - name: Debug - List build output
+        run: |
+          echo "Content of ./website/dist:"
+          ls -la ./website/dist/ || echo "dist not found"
+          echo "---"
+          find ./website -name "browser" -type d
+
       - name: Upload build output
         uses: actions/upload-pages-artifact@v3
         with:
