@@ -28,6 +28,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
+        working-directory: ./website
         run: npm install
 
       - name: Build Angular app
