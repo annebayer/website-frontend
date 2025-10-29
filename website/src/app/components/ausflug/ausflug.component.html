@@ -1,6 +1,4 @@
-<div class="ausflug-container">
-  <!-- Header -->
-
+<div class="ausflug-container" (keydown)="onKeydown($event)" tabindex="0">
   <p>Ausflug</p>
   <div class="ausflug-header">
     <h2 class="ausflug-title">{{ ausflug.title }}</h2>
@@ -9,40 +7,109 @@
     </p>
   </div>
 
-  <!-- Bilder Gruppen -->
   <div class="ausflug-content">
-    <div *ngFor="let bilderGruppe of ausflug.bilder" class="bilder-gruppe">
+    <div class="bilder-gruppe">
 
-      <!-- Beschreibung der Gruppe -->
-      <p *ngIf="bilderGruppe.description" class="gruppe-beschreibung">
-        {{ bilderGruppe.description }}
-      </p>
+      <div class="carousel-container">
+        <button
+          *ngIf="hasMoreImages()"
+          class="carousel-arrow carousel-arrow-left"
+          [disabled]="!canGoPrev()"
+          (click)="prevCarousel()"
+          aria-label="Vorherige Bilder">
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
 
-      <!-- Bilder Grid -->
-      <div
-        class="image-grid"
-        [class.single]="bilderGruppe.bilder.length === 1"
-        [class.double]="bilderGruppe.bilder.length === 2"
-      >
-        <div
-          *ngFor="let image of bilderGruppe.bilder; let imgIndex = index"
-          class="image-wrapper"
-          (click)="onImageClick(bilderGruppe.bilder, imgIndex, bilderGruppe.description || '')"
-        >
-          <img
-            [src]="getImageUrl(image.url)"
-            [alt]="image.alternativeText || 'Ausflugsbild'"
-          />
-          <div class="image-overlay">
-            <span class="zoom-icon">🔍</span>
+        <div class="carousel-content">
+          <div class="image-grid">
+            <div
+              *ngFor="let item of getVisibleImages(); let idx = index"
+              class="image-wrapper"
+              (click)="openLightbox(currentCarouselIndex + idx)">
+              <img
+                [src]="getImageUrl(item.image.url)"
+                [alt]="item.image.alternativeText || 'Ausflugsbild'"
+              />
+              <div class="image-overlay">
+                <span class="zoom-icon">🔍</span>
+              </div>
+              <div *ngIf="item.description" class="image-description">
+                {{ item.description }}
+              </div>
+            </div>
           </div>
         </div>
+
+        <button
+          *ngIf="hasMoreImages()"
+          class="carousel-arrow carousel-arrow-right"
+          [disabled]="!canGoNext()"
+          (click)="nextCarousel()"
+          aria-label="Nächste Bilder">
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div *ngIf="hasMoreImages()" class="carousel-indicators">
+        <span
+          *ngFor="let _ of getIndicatorCount(); let i = index"
+          class="indicator"
+          [class.active]="isIndicatorActive(i)"
+          (click)="currentCarouselIndex = i * 2">
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- Tip am Ende -->
   <div *ngIf="ausflug.tip" class="ausflug-tip">
     <app-tip [tip]="ausflug.tip"></app-tip>
+  </div>
+</div>
+
+<div *ngIf="isLightboxOpen" class="lightbox-overlay" (click)="onLightboxBackgroundClick($event)">
+  <div class="lightbox-container">
+    <button class="lightbox-close" (click)="closeLightbox()" aria-label="Schließen">
+      ✕
+    </button>
+
+    <button
+      *ngIf="allImages.length > 1"
+      class="lightbox-arrow lightbox-arrow-left"
+      (click)="prevLightbox()"
+      aria-label="Vorheriges Bild">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <button
+      *ngIf="allImages.length > 1"
+      class="lightbox-arrow lightbox-arrow-right"
+      (click)="nextLightbox()"
+      aria-label="Nächstes Bild">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+    <div class="lightbox-content">
+      <img
+        [src]="getImageUrl(getCurrentLightboxImage().image.url)"
+        [alt]="getCurrentLightboxImage().image.alternativeText || 'Ausflugsbild'"
+        class="lightbox-image"
+      />
+
+      <div *ngIf="getCurrentLightboxImage().description" class="lightbox-description">
+        {{ getCurrentLightboxImage().description }}
+      </div>
+    </div>
+
+    <div class="lightbox-counter">
+      {{ currentLightboxIndex + 1 }} / {{ allImages.length }}
+    </div>
   </div>
 </div>
