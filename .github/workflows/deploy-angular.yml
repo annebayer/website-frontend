@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Wichtig: Angular 17 erzeugt Builds hier drin
-          path: ./website/dist/**/browser
+          path: ./website/dist/website/browser
 
   deploy:
     needs: build
