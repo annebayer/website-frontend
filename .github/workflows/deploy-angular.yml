@@ -35,10 +35,19 @@ jobs:
         working-directory: ./website
         run: npm run build -- --configuration production
 
+      - name: Debug - Show files
+        run: |
+          echo "Looking for index.html:"
+          find ./website/dist -name "index.html"
+          echo "---"
+          ls -la ./website/dist/website/browser/
+
+      - name: Copy index.html to 404.html
+        run: cp ./website/dist/website/browser/index.html ./website/dist/website/browser/404.html
+
       - name: Upload build output
         uses: actions/upload-pages-artifact@v3
         with:
-          # Wichtig: Angular 17 erzeugt Builds hier drin
           path: ./website/dist/website/browser
 
   deploy:
