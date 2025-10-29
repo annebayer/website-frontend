@@ -37,11 +37,11 @@ jobs:
 
       - name: Debug - Show build output
         run: |
-          echo "Content of dist/browser:"
-          ls -la ./website/dist/browser/
+          echo "Content of dist/website/browser:"
+          ls -la ./website/dist/website/browser/
           echo "---"
           echo "Looking for index.html:"
-          find ./website/dist -name "index.html"
+          find ./website/dist/website -name "index.html"
 
       - name: Upload build output
         uses: actions/upload-pages-artifact@v3
