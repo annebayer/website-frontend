@@ -33,14 +33,15 @@ jobs:
 
       - name: Build Angular app
         working-directory: ./website
-        run: npm run build -- --configuration production
+        run: npm run build -- --configuration production --base-href /
 
-      - name: Debug - List build output
+      - name: Debug - Show build output
         run: |
-          echo "Content of ./website/dist:"
-          ls -la ./website/dist/ || echo "dist not found"
+          echo "Content of dist/browser:"
+          ls -la ./website/dist/browser/
           echo "---"
-          find ./website -name "browser" -type d
+          echo "Looking for index.html:"
+          find ./website/dist -name "index.html"
 
       - name: Upload build output
         uses: actions/upload-pages-artifact@v3
