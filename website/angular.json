@@ -24,6 +24,7 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "outputPath": "website/dist/website/browser",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
