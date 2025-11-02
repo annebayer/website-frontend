@@ -30,6 +30,13 @@
         <app-tip [tip]="block"></app-tip>
       </div>
 
+      <!-- Question-Answer Block -->
+      <div *ngIf="isQuestionAnswer(block)" class="question-answer-block">
+        <app-question-answer
+          [qa]="block">
+        </app-question-answer>
+      </div>
+
       <!-- Ausfluege Block -->
       <div *ngIf="isAusfluege(block)" class="ausfluege-block">
         <app-ausflug [ausflug]="block"></app-ausflug>

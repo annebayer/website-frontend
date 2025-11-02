@@ -10,15 +10,17 @@ import {
   BilderMitTextComponent,
   AusfluegeComponent,
   MediaFile,
-  PictureComponent
+  PictureComponent,
+  QuestionAnswerComponent
 } from './../types/Day';
 import { Tip } from '../components/tip/tip.component';
 import { Ausflug } from '../components/ausflug/ausflug.component';
+import { QuestionAnswer } from '../components/question-answer/question-answer.component';
 
 @Component({
   selector: 'app-article-detail',
   standalone: true,
-  imports: [CommonModule, Tip, Ausflug],
+  imports: [CommonModule, Tip, Ausflug, QuestionAnswer],
   templateUrl: './article-detail.html',
   styleUrls: ['./article-detail.css']
 })
@@ -111,6 +113,10 @@ export class ArticleDetail implements OnInit {
   // --- Type Guards ---
   isTip(block: PictureComponent): block is TipComponent {
     return block.type === 'tip';
+  }
+
+  isQuestionAnswer(block: PictureComponent): block is QuestionAnswerComponent {
+    return block.type === 'question-answer';
   }
 
   isAusfluege(block: PictureComponent): block is AusfluegeComponent {

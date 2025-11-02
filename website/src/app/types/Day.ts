@@ -47,9 +47,20 @@ export interface AusfluegeComponent {
   tip: TipComponent | null;
 }
 
+export interface QuestionAnswerComponent {
+  __component: 'shared.frage-antwort';
+  type: string
+  question: string;
+  answer: string;
+  answerLong: string;
+  bildQuestion?: MediaFile | null;
+  bildAnswer?: MediaFile | null;
+}
+
 export type PictureComponent =
   | TipComponent
-  | AusfluegeComponent;
+  | AusfluegeComponent
+  | QuestionAnswerComponent;
 
 export interface Day {
   id: string;

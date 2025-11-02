@@ -62,6 +62,21 @@ export class DaysService {
                 alternativeText
               }
             }
+            ... on ComponentSharedFrageAntwort {
+              Frage
+              Antwort
+              AntwortLang
+              FrageBild {
+                documentId
+                alternativeText
+                url
+              }
+              AntwortBild {
+                documentId
+                url
+                alternativeText
+              }
+            }
           }
         }
       }
@@ -129,6 +144,24 @@ export class DaysService {
                   id: picture.Bild.documentId,
                   url: picture.Bild.url,
                   alternativeText: picture.Bild.alternativeText
+                } : null
+              };
+
+            case 'ComponentSharedFrageAntwort':
+              return {
+                type: 'question-answer',
+                question: picture.Frage,
+                answer: picture.Antwort,
+                answerLong: picture.AntwortLang,
+                bildQuestion: picture.FrageBild ? {
+                  id: picture.FrageBild.documentId,
+                  url: picture.FrageBild.url,
+                  alternativeText: picture.FrageBild.alternativeText
+                } : null,
+                bildAnswer: picture.AntwortBild ? {
+                  id: picture.AntwortBild.documentId,
+                  url: picture.AntwortBild.url,
+                  alternativeText: picture.AntwortBild.alternativeText
                 } : null
               };
 

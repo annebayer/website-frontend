@@ -1,0 +1,49 @@
+<div class="qa-container" (click)="toggleFlip()" [class.flipped]="isFlipped">
+  <div class="qa-flipper">
+
+    <!-- Vorderseite (Frage) -->
+    <div class="qa-side qa-front">
+      <div class="qa-icon">
+        <img src="/icons/question.png" alt="Frage" />
+      </div>
+
+      <div class="qa-content">
+        <h3 class="qa-title">{{ qa.question }}</h3>
+
+        <div class="qa-image" *ngIf="getQuestionImageUrl() as imgUrl">
+          <img [src]="getFullImageUrl(imgUrl)" [alt]="qa.question" />
+        </div>
+      </div>
+
+      <div class="qa-hint">
+        <span>👆 Klicken für Antwort</span>
+      </div>
+    </div>
+
+    <!-- Rückseite (Antwort) -->
+    <div class="qa-side qa-back">
+      <div class="qa-icon">
+        <img src="/icons/exclamation.png" alt="Antwort" />
+      </div>
+
+      <div class="qa-content">
+        <div class="qa-question-reminder">{{ qa.question }}</div>
+
+        <h3 class="qa-answer">{{ qa.answer }}</h3>
+
+        <p class="qa-answer-long" *ngIf="qa.answerLong">
+          {{ qa.answerLong }}
+        </p>
+
+        <div class="qa-image" *ngIf="getAnswerImageUrl() as imgUrl">
+          <img [src]="getFullImageUrl(imgUrl)" [alt]="qa.answer" />
+        </div>
+      </div>
+
+      <div class="qa-hint">
+        <span>👆 Zurück zur Frage</span>
+      </div>
+    </div>
+
+  </div>
+</div>
