@@ -36,11 +36,6 @@
   animation: rotate 10s linear infinite;
 }
 
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 .logo-text {
   background: linear-gradient(to right, #fff, #f0f0f0);
   -webkit-background-clip: text;
