@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Map, MapComponent, LocationComponent, RouteComponent, Coordinates } from './types/Map';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
-  private graphqlUrl = 'http://localhost:1337/graphql';
+  private graphqlUrl = environment.graphqlUrl;
 
   constructor(private http: HttpClient) {}
 

@@ -3,11 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Day } from './types/Day';
+import { environment } from '../environments/environment';
+
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
-  private apiUrl = 'http://localhost:1337/api/tages?populate[pictures][populate]=*';
-  private baseUrl = 'http://localhost:1337';
+  private apiUrl = environment.apiUrl;
+    private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) {}
 

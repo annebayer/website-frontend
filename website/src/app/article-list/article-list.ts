@@ -5,6 +5,8 @@ import { DaysService } from '../days.service';
 import { Day } from './../types/Day';
 import { RouterModule } from '@angular/router';
 import { toSlug } from '../util/slug'
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-article-list',
@@ -15,7 +17,7 @@ import { toSlug } from '../util/slug'
 })
 export class ArticleList implements OnInit {
   days: Day[] = [];
-  private strapiUrl = 'http://localhost:1337';
+    private strapiUrl = environment.baseUrl;
 
   constructor(
     private articleService: DaysService,

@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Day } from './types/Day';
+import { environment } from '../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DaysService {
-  private graphqlUrl = 'http://localhost:1337/graphql';
+  private graphqlUrl = environment.graphqlUrl;
 
   constructor(private http: HttpClient) {}
 

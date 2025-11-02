@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { DaysService } from '../days.service';
+import { environment } from '../../environments/environment';
+
 import {
   Day,
   TipComponent,
@@ -22,7 +24,7 @@ import { Ausflug } from '../components/ausflug/ausflug.component';
 })
 export class ArticleDetail implements OnInit {
   day: Day | null = null;
-  private strapiUrl = 'http://localhost:1337';
+    private strapiUrl = environment.baseUrl;
 
   // Lightbox Properties
   lightboxOpen = false;

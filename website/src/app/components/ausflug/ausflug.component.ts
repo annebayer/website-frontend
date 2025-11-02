@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AusfluegeComponent, MediaFile, AusflugBild } from '../../types/Day';
 import { Tip } from '../tip/tip.component';
+import { environment } from '../../../environments/environment';
 
 interface ImageWithDescription {
   image: MediaFile;
@@ -17,7 +18,8 @@ interface ImageWithDescription {
 })
 export class Ausflug implements OnInit {
   @Input() ausflug!: AusfluegeComponent;
-  @Input() strapiUrl: string = 'http://localhost:1337';
+  @Input() strapiUrl: string = environment.baseUrl;
+
 
   @Output() imageClick = new EventEmitter<{
     images: MediaFile[];
