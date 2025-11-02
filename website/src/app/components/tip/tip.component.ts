@@ -17,10 +17,10 @@ export class Tip {
 
   getIconUrl(): string {
     switch (this.tip.icon) {
-      case 'Ausrufezeichen': return '/icons/exclamation.png';
-      case 'Fragezeichen': return '/icons/question.png';
-      case 'Smiley': return '/icons/smiley.png';
-      default: return '/icons/smileyBad.png';
+      case 'Ausrufezeichen': return 'icons/exclamation.png';
+      case 'Fragezeichen': return 'icons/question.png';
+      case 'Smiley': return 'icons/smiley.png';
+      default: return 'icons/smileyBad.png';
     }
   }
 
