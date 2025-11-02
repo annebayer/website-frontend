@@ -7,7 +7,7 @@
     {{ tip.text }}
   </div>
 
-  <div class="tip-image" *ngIf="getImageUrl() as imgUrl">
-    <img [src]="'http://localhost:1337' + imgUrl" alt="Tip image" />
+  <div class="tip-image" *ngIf="getImageUrl(tip.bild?.url) as imgUrl">
+    <img [src]="getImageUrl(tip.bild?.url)" alt="Tip image" />
   </div>
 </div>

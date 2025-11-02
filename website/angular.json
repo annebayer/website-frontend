@@ -41,6 +41,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/website-frontend/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

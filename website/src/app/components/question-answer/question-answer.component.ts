@@ -12,6 +12,7 @@ import { environment } from '../../../environments/environment';
 })
 export class QuestionAnswer {
   @Input() qa!: QuestionAnswerComponent;
+  @Input() baseUrl: string = environment.baseUrl;
   isFlipped = false;
 
   toggleFlip(): void {
@@ -29,6 +30,6 @@ export class QuestionAnswer {
   }
 
   getFullImageUrl(url: string): string {
-    return environment.baseUrl + url;
+    return `${this.baseUrl}${url}`;
   }
 }

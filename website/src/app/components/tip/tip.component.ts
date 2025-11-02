@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TipComponent } from '../../types/Day';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-tip',
@@ -11,6 +12,8 @@ import { TipComponent } from '../../types/Day';
 })
 export class Tip {
   @Input() tip!: TipComponent;
+  @Input() baseUrl: string = environment.baseUrl;
+
 
   getIconUrl(): string {
     switch (this.tip.icon) {
@@ -21,9 +24,9 @@ export class Tip {
     }
   }
 
-  getImageUrl(): string | null {
-    if (!this.tip.bild) return null;
-    return this.tip.bild.formats?.small?.url ?? this.tip.bild.url ?? null;
-  }
+    getImageUrl(url: string| undefined): string {
+      if (!url) return '';
+      return url.startsWith('http') ? url : `${this.baseUrl}${url}`;
+    }
 
 }
