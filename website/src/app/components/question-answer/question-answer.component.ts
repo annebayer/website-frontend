@@ -30,6 +30,7 @@ export class QuestionAnswer {
   }
 
   getFullImageUrl(url: string): string {
-    return `${this.baseUrl}${url}`;
+      if (!url) return '';
+       return url.startsWith('http') ? url : `${this.baseUrl}${url}`;
   }
 }
