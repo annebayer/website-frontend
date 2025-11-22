@@ -27,6 +27,7 @@ export class MapService {
               Koordinate {
                 x
                 y
+                KoordinatenZusammen
               }
               Sign {
                 Art
@@ -41,6 +42,7 @@ export class MapService {
               Koordinaten {
                 x
                 y
+                KoordinatenZusammen
               }
               MapRouteArt {
                 Art
@@ -55,7 +57,7 @@ export class MapService {
       this.graphqlUrl,
       { query }
     ).pipe(
-      map(response => this.mapToMap(response.data.karte))  // ← Kein .map(), da kein Array
+      map(response => this.mapToMap(response.data.karte))
     );
   }
 
@@ -70,15 +72,13 @@ export class MapService {
     return orte.map(ort => {
       switch (ort.__typename) {
         case 'ComponentSharedMap':
+          const coords = this.parseCoordinates(ort.Koordinate);
           return {
             type: 'location',
             id: ort.id,
             hoverTitle: ort.hoverTitle,
             sign: ort.Sign?.Art || '',
-            coordinates: {
-              x: ort.Koordinate?.x || 0,
-              y: ort.Koordinate?.y || 0
-            },
+            coordinates: coords,
             relation: ort.tages?.[0] ? {
               title: ort.tages[0].title
             } : undefined
@@ -89,10 +89,9 @@ export class MapService {
             type: 'route',
             from: ort.Von,
             to: ort.Nach,
-            coordinates: (ort.Koordinaten || []).map((k: any) => ({
-              x: k.x,
-              y: k.y
-            })),
+            coordinates: (ort.Koordinaten || []).map((k: any) =>
+              this.parseCoordinates(k)
+            ),
             lineStyle: ort.MapRouteArt != null ? ort.MapRouteArt.Art : null,
           } as RouteComponent;
 
@@ -101,5 +100,53 @@ export class MapService {
           return null;
       }
     }).filter(Boolean) as MapComponent[];
+  }
+
+  private parseCoordinates(koordinate: any): { x: number; y: number } {
+    if (koordinate?.x != null && koordinate?.y != null) {
+      return {
+        x: koordinate.x,
+        y: koordinate.y
+      };
+    }
+
+    if (koordinate?.KoordinatenZusammen) {
+      const coords = this.parseKoordinatenZusammen(koordinate.KoordinatenZusammen);
+      if (coords) {
+        return coords;
+      }
+    }
+
+    console.warn('Keine gültigen Koordinaten gefunden:', koordinate);
+    return { x: 0, y: 0 };
+  }
+
+  private parseKoordinatenZusammen(koordinatenStr: string): { x: number; y: number } | null {
+    if (!koordinatenStr) {
+      return null;
+    }
+
+    try {
+      const cleaned = koordinatenStr
+        .replace(/[()]/g, '')
+        .replace(/,/g, '');
+
+      const parts = cleaned.trim().split(/\s+/);
+
+      if (parts.length >= 2) {
+        const x = parseFloat(parts[0]);
+        const y = parseFloat(parts[1]);
+
+        if (!isNaN(x) && !isNaN(y)) {
+          return { x, y };
+        }
+      }
+
+      console.warn('Ungültiges KoordinatenZusammen Format:', koordinatenStr);
+      return null;
+    } catch (error) {
+      console.error('Fehler beim Parsen von KoordinatenZusammen:', koordinatenStr, error);
+      return null;
+    }
   }
 }

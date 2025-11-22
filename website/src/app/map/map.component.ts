@@ -56,9 +56,6 @@ private addMarkersAndRoutes(): void {
     this.map = L.map('map', {
           attributionControl: true,
           worldCopyJump: false,
-          maxBounds: [[-90, -180], [90, 180]],
-          maxBoundsViscosity: 0.8,
-          minZoom: 2
       })
       .setView([-43.5321, 172.6362], 5);
       this.map.attributionControl.setPrefix(false); // remove Leaflet-Log
