@@ -1,11 +1,1 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
-  overflow-x: hidden;
-}
-
-@media (max-width: 311px) {
-  html, body {
-    overflow-x: auto;
-    min-width: 280px;
-  }
-}

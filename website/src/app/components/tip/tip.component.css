@@ -11,8 +11,10 @@
 }
 
 .tip-icon img {
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  max-width: 50px;
+  max-height: 50px;
+  height: auto;
   object-fit: contain;
   display: block;
   margin: auto;
@@ -27,8 +29,32 @@
   width: 100%;
   max-width: 200px;
   max-height: 200px;
+  height: auto;
   object-fit: cover;
   border-radius: 6px;
   display: block;
   margin: auto;
+}
+
+@media (max-width: 768px) {
+  .tip-image img {
+    max-width: 150px;
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tip-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .tip-image img {
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .tip-text {
+    font-size: 1rem;
+  }
 }
