@@ -213,7 +213,7 @@
 /* Kleine Smartphones */
 @media (max-width: 380px) {
   .logo a {
-    font-size: 1rem;
+    font-size: 0.9rem;
     gap: 6px;
   }
 
