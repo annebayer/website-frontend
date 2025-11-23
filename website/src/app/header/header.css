@@ -5,6 +5,7 @@
   top: 0;
   z-index: 1000;
   padding: 0 20px;
+  margin-bottom: 10px;
 }
 
 .container {
@@ -14,6 +15,12 @@
   justify-content: space-between;
   align-items: center;
   height: 70px;
+}
+
+.logo {
+  flex: 1;
+  min-width: 0; /* Wichtig für Text-Overflow */
+  overflow: hidden;
 }
 
 .logo a {
@@ -33,7 +40,7 @@
 
 .logo-icon {
   font-size: 2rem;
-  animation: rotate 10s linear infinite;
+  flex-shrink: 0; /* Icon behält Größe */
 }
 
 .logo-text {
@@ -41,6 +48,9 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nav {
@@ -101,6 +111,8 @@
   border: none;
   cursor: pointer;
   padding: 5px;
+  flex-shrink: 0; /* Burger-Menu behält immer seine Größe */
+  margin-left: 10px;
 }
 
 .menu-toggle span {
@@ -124,7 +136,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .menu-toggle {
     display: flex;
   }
@@ -142,6 +154,7 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .nav.active {
@@ -157,12 +170,66 @@
   }
 }
 
-.header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding: 0 20px;
-  margin-bottom: 10px;
+/* Kleinere Tablets und große Smartphones */
+@media (max-width: 600px) {
+  .logo a {
+    font-size: 1.3rem;
+  }
+
+  .logo-icon {
+    font-size: 1.7rem;
+  }
+
+  .container {
+    height: 60px;
+  }
+
+  .nav {
+    top: 60px;
+  }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  .logo a {
+    font-size: 1.1rem;
+    gap: 8px;
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+
+  .header {
+    padding: 0 15px;
+  }
+
+  .nav a {
+    font-size: 1.1rem;
+    padding: 8px 15px;
+  }
+}
+
+/* Kleine Smartphones */
+@media (max-width: 380px) {
+  .logo a {
+    font-size: 1rem;
+    gap: 6px;
+  }
+
+  .logo-icon {
+    font-size: 1.3rem;
+  }
+
+  .container {
+    height: 55px;
+  }
+
+  .nav {
+    top: 55px;
+  }
+
+  .nav a {
+    font-size: 1rem;
+  }
 }
