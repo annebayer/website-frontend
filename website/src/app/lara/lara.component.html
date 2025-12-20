@@ -1,0 +1,18 @@
+<div class="container">
+  <h1 class="congratulations">
+    🎉 Herzlichen Glückwunsch Lara, du hast die Seite entdeckt! 🎉
+  </h1>
+
+  <div class="egg-container">
+    <div class="egg" (click)="openImage()">
+      <img src="hobbithouse.png">
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="showImage" (click)="closeImage()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span class="close" (click)="closeImage()">&times;</span>
+      <img src="easteregg.jpeg" alt="Überraschung!">
+    </div>
+  </div>
+</div>
