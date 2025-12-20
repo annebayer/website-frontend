@@ -1,8 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 html, body {
-  overflow-x: visible;
+  overflow: hidden; /* Body hat keinen Scroll mehr */
+  height: 100%;
+  margin: 0;
 }
 
+app-root {
+  display: block;
+  height: 100vh;
+  overflow-y: auto; /* Nur app-root scrollt */
+  overflow-x: hidden;
+}
+
+/* Scrollbar ausblenden */
+app-root::-webkit-scrollbar {
+  display: none;
+}
+
+app-root {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
 @media (max-width: 311px) {
   html, body {
     overflow-x: auto;
