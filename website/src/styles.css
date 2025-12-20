@@ -3,6 +3,10 @@ html, body {
   overflow-x: hidden;
 }
 
+body.scroll {
+  overflow: hidden !important;
+}
+
 @media (max-width: 311px) {
   html, body {
     overflow-x: auto;

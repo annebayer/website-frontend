@@ -20,7 +20,6 @@
 .logo {
   flex: 1;
   min-width: 0; /* Wichtig für Text-Overflow */
-  overflow: hidden;
 }
 
 .logo a {
