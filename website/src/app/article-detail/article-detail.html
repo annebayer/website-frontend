@@ -15,8 +15,10 @@
   </header>
 
   <!-- Description -->
-  <section class="description" *ngIf="day.description?.length">
-    <p>{{ getDescriptionText() }}</p>
+  <section class="description" *ngIf="getDescriptionParagraphs().length">
+    <p *ngFor="let paragraph of getDescriptionParagraphs()">
+      {{ paragraph }}
+    </p>
   </section>
 
   <!-- Picture Blocks -->

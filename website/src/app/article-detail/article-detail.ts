@@ -77,11 +77,17 @@ export class ArticleDetail implements OnInit {
   }
 
   // --- Get Description Text ---
-  getDescriptionText(): string {
-    if (!this.day?.description) return '';
+  getDescriptionParagraphs(): string[] {
+    if (!this.day?.description) return [];
+
     return this.day.description
-      .map(block => block.children.map(child => child.text).join(''))
-      .join('\n\n');
+      .filter((block: any) => block.type === 'paragraph')
+      .map((block: any) =>
+        block.children
+          .map((child: any) => child.text)
+          .join('')
+      )
+      .filter((text: string) => text.trim().length > 0);
   }
 
   // --- Lightbox Methods ---
