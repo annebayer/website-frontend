@@ -74,6 +74,6 @@ export interface Day {
   dateTo?: string | null;
   description: RichTextBlock[] | null;
   descriptionShort?: string | null;
-  Highlights?: string | null;
+  highlights?: string | null;
   pictures: PictureComponent[];
 }
