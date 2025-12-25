@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 html, body {
-  overflow: hidden; /* Body hat keinen Scroll mehr */
+  overflow-x: hidden;
+  overflow-y: auto;
   height: 100%;
   margin: 0;
 }
