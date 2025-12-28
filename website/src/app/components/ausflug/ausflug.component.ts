@@ -20,7 +20,6 @@ export class Ausflug implements OnInit {
   @Input() ausflug!: AusfluegeComponent;
   @Input() strapiUrl: string = environment.baseUrl;
 
-
   @Output() imageClick = new EventEmitter<{
     images: MediaFile[];
     index: number;
@@ -28,9 +27,7 @@ export class Ausflug implements OnInit {
   }>();
 
   allImages: ImageWithDescription[] = [];
-
   currentCarouselIndex = 0;
-
   isLightboxOpen = false;
   currentLightboxIndex = 0;
 
@@ -51,18 +48,31 @@ export class Ausflug implements OnInit {
     return url.startsWith('http') ? url : `${this.strapiUrl}${url}`;
   }
 
+  // Hilfsmethode für die Anzahl der sichtbaren Bilder
+  getImagesPerPage(): number {
+    return this.isSmallScreen() ? 1 : 2;
+  }
+
   nextCarousel(): void {
-    const maxIndex = Math.max(0, this.allImages.length - 2);
-    this.currentCarouselIndex = Math.min(this.currentCarouselIndex + 2, maxIndex);
+    const imagesPerPage = this.getImagesPerPage();
+    const maxIndex = Math.max(0, this.allImages.length - imagesPerPage);
+    this.currentCarouselIndex = Math.min(
+      this.currentCarouselIndex + imagesPerPage, 
+      maxIndex
+    );
   }
 
   prevCarousel(): void {
-    this.currentCarouselIndex = Math.max(0, this.currentCarouselIndex - 2);
+    const imagesPerPage = this.getImagesPerPage();
+    this.currentCarouselIndex = Math.max(0, this.currentCarouselIndex - imagesPerPage);
   }
 
   getVisibleImages(): ImageWithDescription[] {
-    const imagesToShow = this.isSmallScreen() ? 1 : 2;
-    return this.allImages.slice(this.currentCarouselIndex, this.currentCarouselIndex + imagesToShow);
+    const imagesToShow = this.getImagesPerPage();
+    return this.allImages.slice(
+      this.currentCarouselIndex, 
+      this.currentCarouselIndex + imagesToShow
+    );
   }
 
   isSmallScreen(): boolean {
@@ -70,11 +80,13 @@ export class Ausflug implements OnInit {
   }
 
   hasMoreImages(): boolean {
-    return this.allImages.length > 2;
+    const imagesPerPage = this.getImagesPerPage();
+    return this.allImages.length > imagesPerPage;
   }
 
   canGoNext(): boolean {
-    return this.currentCarouselIndex < this.allImages.length - 2;
+    const imagesPerPage = this.getImagesPerPage();
+    return this.currentCarouselIndex < this.allImages.length - imagesPerPage;
   }
 
   canGoPrev(): boolean {
@@ -82,12 +94,13 @@ export class Ausflug implements OnInit {
   }
 
   getIndicatorCount(): number[] {
-    let divisor = this.isSmallScreen() ? 1 : 2
-    return Array(Math.ceil(this.allImages.length / divisor)).fill(0);
+    const imagesPerPage = this.getImagesPerPage();
+    return Array(Math.ceil(this.allImages.length / imagesPerPage)).fill(0);
   }
 
   isIndicatorActive(index: number): boolean {
-    return this.currentCarouselIndex === index * 2;
+    const imagesPerPage = this.getImagesPerPage();
+    return this.currentCarouselIndex === index * imagesPerPage;
   }
 
   openLightbox(globalIndex: number): void {
