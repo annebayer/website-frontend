@@ -86,9 +86,4 @@
   .day-card {
     flex-direction: column;
   }
-
-  .teaser-image {
-    width: 100%;
-    height: 200px;
-  }
 }
