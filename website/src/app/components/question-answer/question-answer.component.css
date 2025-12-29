@@ -3,12 +3,14 @@
   margin: 20px 0;
   cursor: pointer;
   position: relative;
+  min-height: 200px;
 }
 
 .qa-flipper {
   position: relative;
   width: 100%;
-  min-height: fit-content;
+  heigth: 100%;
+  min-height: 200px;
   transition: transform 0.6s;
   transform-style: preserve-3d;
 }
@@ -31,17 +33,15 @@
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  min-heigth: 200px;
 }
 
 .qa-front {
   transform: rotateY(0deg);
-  position: relative;
 }
 
 .qa-back {
   transform: rotateY(180deg);
-  position: absolute;
-  inset: 0;
 }
 
 /* Icon Bereich */
