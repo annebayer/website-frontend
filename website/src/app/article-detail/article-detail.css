@@ -126,6 +126,13 @@
   margin-bottom: 1rem;
 }
 
+/* QuestionAnswer Block */
+.question-answer-block,
+.question-answer-wrapper {
+  background: transparent;
+  padding: 0;
+}
+
 .image-grid.single {
   grid-template-columns: 1fr;
   max-width: 600px;
