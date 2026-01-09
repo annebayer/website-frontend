@@ -37,7 +37,7 @@ export class DaysService {
               description
               bilderKomponenten: Bilder {
                 Beschreibung
-                bilderMedia: Bilder {
+                bilderMedia: Bilder(pagination: { pageSize: 50 }) {
                   documentId
                   url
                   alternativeText
