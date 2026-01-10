@@ -35,7 +35,7 @@ export class DaysService {
             ... on ComponentSharedAusfluege {
               title
               description
-              bilderKomponenten: Bilder {
+              bilderKomponenten: Bilder(pagination: { pageSize: 50 }) {
                 Beschreibung
                 bilderMedia: Bilder(pagination: { pageSize: 50 }) {
                   documentId
