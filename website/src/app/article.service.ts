@@ -41,6 +41,7 @@ export class ArticleService {
           return {
             id: item.id,
             title: attr.title,
+            name: attr.name,
             dateFrom: attr.dateFrom,
             dateTo: attr.dateTo,
             highlight: attr.highlight || '',
