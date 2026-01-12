@@ -95,7 +95,7 @@ export class DaysService {
     return {
       id: tage.documentId,
       title: tage.title,
-      name: tage.name,
+      name: tage.name || tage.title,
       dateFrom: tage.dateFrom,
       dateTo: tage.dateTo,
       teaserBild: tage.TeaserBild ? {
