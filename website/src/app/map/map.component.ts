@@ -139,6 +139,9 @@ private addMarkersAndRoutes(): void {
           case 'Essen':
             iconUrl = 'marker/food.png';
             break;
+          case 'ParkenAktuell':
+            iconUrl = 'marker/sleepingactual.png';
+            break;
           case 'Parken':
             iconUrl = 'marker/sleeping.png';
             break;

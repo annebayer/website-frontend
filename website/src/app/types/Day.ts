@@ -65,6 +65,7 @@ export type PictureComponent =
 export interface Day {
   id: string;
   title: string;
+  name: string;
   teaserBild?: {
     id: string
     alternativeText: string
