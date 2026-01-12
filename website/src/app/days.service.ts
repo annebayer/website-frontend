@@ -17,7 +17,7 @@ export class DaysService {
   getDays(): Observable<Day[]> {
     const query = `
       query GetTages {
-        tages {
+        tages(pagination: { page: 1, pageSize: 100 }) {
           documentId
           title
           name
