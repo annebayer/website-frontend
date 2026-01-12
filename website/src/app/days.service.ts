@@ -20,6 +20,7 @@ export class DaysService {
         tages {
           documentId
           title
+          name
           dateFrom
           dateTo
           descriptionShort
@@ -94,6 +95,7 @@ export class DaysService {
     return {
       id: tage.documentId,
       title: tage.title,
+      name: tage.name,
       dateFrom: tage.dateFrom,
       dateTo: tage.dateTo,
       teaserBild: tage.TeaserBild ? {
