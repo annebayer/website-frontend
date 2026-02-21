@@ -139,6 +139,23 @@ export class DaysService {
         } as Day;
       }
 
+  private mapToDayList(tage: any): Day {
+    return {
+      id: tage.documentId,
+      title: tage.title,
+      name: tage.name || tage.title,
+      dateFrom: tage.dateFrom,
+      dateTo: tage.dateTo,
+      teaserBild: tage.TeaserBild ? {
+        id: tage.TeaserBild.documentId,
+        url: tage.TeaserBild.url,
+        alternativeText: tage.TeaserBild.alternativeText
+      } : null,
+      descriptionShort: tage.descriptionShort,
+      highlights: tage.Highlights
+        } as Day;
+      }
+
       private mapPictures(pictures: any[]): any[] {
         return pictures.map(picture => {
           switch (picture.__typename) {
