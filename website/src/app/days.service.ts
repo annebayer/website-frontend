@@ -91,6 +91,35 @@ export class DaysService {
     );
   }
 
+
+  getDaysList(): Observable<Day[]> {
+    const query = `
+      query GetTagesList {
+        tages(pagination: { pageSize: 10 }) {
+          documentId
+          title
+          name
+          dateFrom
+          dateTo
+          descriptionShort
+          Highlights
+          TeaserBild {
+            url
+            alternativeText
+          }
+        }
+      }
+    `;
+
+    return this.http.post<{ data: { tages: any[] } }>(
+      this.graphqlUrl,
+      { query }
+    ).pipe(
+      map(res => res.data.tages.map(t => this.mapToDayList(t)))
+    );
+  }
+  
+
   private mapToDay(tage: any): Day {
     return {
       id: tage.documentId,
