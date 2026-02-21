@@ -25,7 +25,7 @@ export class ArticleList implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.articleService.getDays().subscribe((res) => {
+    this.articleService.getDaysList().subscribe((res) => {
       this.days = res.sort((a, b) => {
             return new Date(b.dateFrom).getTime() - new Date(a.dateFrom).getTime();
           });
